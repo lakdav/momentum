@@ -1,9 +1,24 @@
+const greatingText = {
+	утро: 'Доброе утро',
+	день: 'Добрый день',
+	вечер: 'Добрый вечер',
+	ночь: 'Доброй ночи',
+	morning: 'Good morning',
+	afternoon: 'Good afternoon',
+	evening: ' Good evening',
+	night: ' Good night',
+};
+
+type TDayTimeEng = 'morning' | 'afternoon' | 'evening' | 'night';
+
 export default class Time {
 	#name: string | null = '';
 	#timeContainer: HTMLDivElement;
 	#dayContainer: HTMLDivElement;
 	#greetingContainer: HTMLDivElement;
 	#input: HTMLInputElement;
+	#hour!: number;
+	observer!: { (t: TDayTimeEng): void } | null;
 	#options: Intl.DateTimeFormatOptions = {
 		month: 'long',
 		weekday: 'long',
@@ -18,16 +33,20 @@ export default class Time {
 		this.#setLocalStorage();
 		this.#setName();
 	}
+
 	#time() {
 		const date = new Date();
 		this.#timeContainer.textContent = date.toLocaleTimeString();
 		this.#dayContainer.textContent = date.toLocaleDateString('ru-RU', this.#options);
+		if (this.#hour !== date.getHours()) {
+			this.#hour = date.getHours();
+			this.#greeting();
+		}
 	}
 	#greeting() {
-		const hr = new Date().getHours();
-		let datePart = this.getDayPart(hr);
-
-		this.#greetingContainer.firstElementChild!.textContent = `Good ${datePart}`;
+		this.#hour = new Date().getHours();
+		let datePart: keyof typeof greatingText = this.getDayPart(this.#hour, { rus: 'rus' });
+		this.#greetingContainer.firstElementChild!.textContent = greatingText[datePart];
 		if (this.#name) {
 			this.#input.value = this.#name
 				.split('')
@@ -53,18 +72,26 @@ export default class Time {
 		this.#name = localStorage.getItem('name') ? localStorage.getItem('name') : this.#name;
 		this.#greeting();
 	}
-	getDayPart(hour: number) {
-		let partOfDay: string = '';
-		if (hour < 12) {
-			partOfDay = 'morning';
+	getDayPart(hour: number, o?: { rus?: 'rus' }) {
+		const rus = o?.rus;
+
+		let partOfDay: keyof typeof greatingText;
+		if (6 < hour && hour < 12) {
+			partOfDay = rus ? 'утро' : 'morning';
 		}
-		if (12 <= hour && hour < 16) {
-			partOfDay = 'afternoon';
+		if (12 <= hour && hour < 18) {
+			partOfDay = rus ? 'день' : 'afternoon';
 		}
-		if (16 <= hour && hour < 24) {
-			partOfDay = 'evening';
+		if (18 <= hour && hour < 24) {
+			partOfDay = rus ? 'вечер' : 'evening';
 		}
-		return partOfDay;
+		if (0 <= hour && hour < 6) {
+			partOfDay = rus ? 'ночь' : 'night';
+		}
+		if (this.observer) {
+			this.observer(partOfDay! as TDayTimeEng);
+		}
+		return partOfDay!;
 	}
 	init() {
 		this.#time();
