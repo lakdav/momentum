@@ -2,6 +2,8 @@ import Time from './Time';
 import Slide from './Slide';
 import { view } from './view';
 import Weather from './Weather';
+import Quotes from './Quotes';
+import { qoutes } from './qoutes';
 
 const app = () => {
 	const { dayContainer, greetingContainer, timeContainer } = view;
@@ -18,6 +20,7 @@ const app = () => {
 	slide.animateSLide();
 
 	const weather = new Weather('.weather');
+	new Quotes(qoutes);
 };
 
 export default app;
