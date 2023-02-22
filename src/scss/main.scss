@@ -125,7 +125,7 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: flex-start;
-	row-gap: 5px;
+	gap: 15px;
 	width: 180px;
 	min-height: 180px;
 	text-align: left;
@@ -138,9 +138,9 @@ body {
 .description-container {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: flex-start;
-	align-items: center;
-	column-gap: 12px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
 }
 
 .weather-icon {
