@@ -17,7 +17,26 @@
         <button class="play player-icon"></button>
         <button class="play-next player-icon"></button>
       </div>
-      <ul class="play-list"></ul>
+      <div id="controls" class="controls">
+        <h2 class="controls__title">Aqua Caelestis</h2>
+        <div class="controls__container">
+          <div class="controls__progress">
+            <progress style="cursor: pointer;" value="0" max="100"></progress>
+            <p class="controls__progress-duration"><span>0:00</span>&nbsp; /&nbsp; <span>00:00</span></p>
+          </div>
+          <div class="voice">
+            <button class="voice__btn"></button>
+            <input type="range" max="100" min="0" class="voice__volume">
+          </div>
+        </div>
+      </div>
+      <ul class="play-list_name">
+        <button><span class="icon"></span> Aqua Caelestis</button>
+        <button><span class="icon"></span>Ennio Morricone</button>
+        <button> <span class="icon"></span>River Flows In You</button>
+        <button> <span class="icon"></span>Summer Wind</button>
+      </ul>
+
     </div>
     <div class="weather">
       <input type="text" class="city" />

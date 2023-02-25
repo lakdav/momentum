@@ -38,7 +38,7 @@ module.exports = (args) => {
 		output: {
 			path: path.resolve(path.join(__dirname, 'dist')),
 			filename: isProduction ? '[name].[contenthash].js' : '[name].bundle.js',
-			assetModuleFilename: 'images/[hash][ext][query]',
+			assetModuleFilename: '[hash][ext][query]',
 			clean: true,
 		},
 		devtool: 'source-map',
@@ -65,6 +65,16 @@ module.exports = (args) => {
 				{
 					test: /\.(png|svg|jpg|jpeg|gif)$/i,
 					type: 'asset/resource',
+					generator: {
+						filename: 'images/[hash][ext][query]',
+					},
+				},
+				{
+					test: /\.(mp3|mp4)$/i,
+					type: 'asset/resource',
+					generator: {
+						filename: 'audio/[hash][ext][query]',
+					},
 				},
 				{
 					test: /\.html$/i,

@@ -16,7 +16,7 @@ body {
 	font-family: 'Arial', sans-serif;
 	font-size: 16px;
 	color: #fff;
-	text-align: center;
+
 	background: var(--bg) center/cover, rgba(0, 0, 0, 0.5);
 	background-blend-mode: multiply;
 	transition: background-image 1s ease-in-out;
@@ -28,7 +28,7 @@ body {
 	justify-content: space-between;
 	align-items: flex-start;
 	width: 100%;
-	height: 30vh;
+
 	min-height: 220px;
 	padding: 20px;
 }
@@ -41,10 +41,42 @@ body {
 	margin-bottom: 28px;
 }
 
-.play-list {
-	text-align: left;
+.play-list_name {
+	list-style: none;
 }
-
+.play-list_name button {
+	color: rgba(255, 255, 255, 0.575);
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	transition: color 0.2s;
+	margin-bottom: 10px;
+}
+.play-list_name button.active {
+	color: rgba(255, 255, 255, 1);
+}
+.play-list_name button .icon {
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-size: 15px 15px;
+	background-image: url('../assets/svg/play.svg');
+}
+.play-list_name button:hover {
+	color: #fff;
+}
+.play-list_name button.playactive .icon {
+	width: 15px;
+	height: 15px;
+	background-size: 15px 15px;
+	background-image: url('../assets/svg/pause.svg');
+}
+.play-list_name button.active span {
+	color: #fff;
+}
 .play-item {
 	position: relative;
 	padding: 5px;
@@ -266,6 +298,48 @@ body {
 	min-height: 20px;
 }
 
+.controls {
+	margin-bottom: 30px;
+	&__title {
+		font-style: italic;
+		text-align: left;
+	}
+	display: flex;
+	flex-direction: column;
+	&__container {
+		display: flex;
+		align-items: center;
+		gap: 15px;
+	}
+	&__progress {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		&-duration {
+			font-size: 14px;
+		}
+	}
+}
+.voice {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	&__btn {
+		width: 20px;
+		aspect-ratio: 1;
+		border: none;
+		background: url('../assets/svg/volume-off-solid.svg');
+		background-size: contain;
+		background-repeat: no-repeat;
+		cursor: pointer;
+		&.muted {
+			background: url('../assets/svg/volume-xmark-solid.svg');
+		}
+	}
+	&__volume {
+		max-width: 70px;
+	}
+}
 @media (max-width: 768px) {
 	.time {
 		min-height: 80px;
