@@ -46,11 +46,16 @@ const app = () => {
 			el.checked = false;
 		}
 	});
-	console.log(view.tags);
+
 	if (backgroundApi.api === 'github') {
 		view.tags.forEach((el) => {
-			console.log(el);
 			el.disabled = true;
+		});
+	} else {
+		view.tags.forEach((el) => {
+			if (backgroundApi.tag === el.textContent?.toLowerCase()) {
+				el.classList.add('active');
+			}
 		});
 	}
 
@@ -171,6 +176,9 @@ const app = () => {
 		view.apiOPtions.querySelector('.api-node > #time')!.textContent = val ? 'Время' : 'Time';
 		view.apiOPtions.querySelector('.api-node > #music')!.textContent = val ? 'Музыка' : 'Music';
 		view.apiOPtions.querySelector('.api-node > #qoute')!.textContent = val ? 'Цитата' : 'Qoute';
+		view.apiOPtions.querySelector('.api-background > #background')!.textContent = val
+			? 'ФОНОВОЕ ИЗОБРАЖЕНИЕ'
+			: 'Background image';
 	};
 	const setLang = (val: string) => {
 		wether.lang = val;
@@ -249,12 +257,29 @@ const app = () => {
 			localStorage.setItem('backgroundApi', JSON.stringify(backgroundApi));
 		});
 	});
+	let currentTag: any;
 	view.tags.forEach((el) => {
 		el.addEventListener('click', () => {
-			const val = el.textContent!.toLowerCase();
+			if (!currentTag) {
+				view.tags.forEach((el) => {
+					el.classList.remove('active');
+				});
+			}
+			let val: string;
+			if (currentTag && el !== currentTag) {
+				currentTag.classList.remove('active');
+			}
+			if (el === currentTag) {
+				val = '';
+				el.classList.remove('active');
+			} else {
+				val = el.textContent!.toLowerCase();
+				el.classList.add('active');
+			}
 			slide.setNewflickrTag(val);
-			backgroundApi.tag = val.toLowerCase();
+			backgroundApi.tag = val;
 			localStorage.setItem('backgroundApi', JSON.stringify(backgroundApi));
+			currentTag = el;
 		});
 	});
 };

@@ -9,13 +9,16 @@ export default class Slide {
 	ms = 10000;
 	api: string;
 	flickr!: string[];
-	flickrTag: string;
+	flickrTag?: string;
 	length = 20;
 	iT!: number;
-	constructor(tag: string, api = 'github', flickrTag = 'nature') {
+	constructor(tag: string, api = 'github', flickrTag?: string) {
 		this._tag = tag;
 		this.api = api;
-		this.flickrTag = flickrTag;
+		if (flickrTag) {
+			this.flickrTag = flickrTag;
+		}
+
 		this.index = getRndInteger(1, 20);
 		document.getElementById('prev')?.addEventListener('click', this.prev);
 		document.getElementById('next')?.addEventListener('click', this.next);
@@ -28,8 +31,6 @@ export default class Slide {
 		}, this.ms);
 	};
 	animateSLide = () => {
-		console.log(this.timer);
-		console.log(this.iT);
 		this.index++;
 		if (this.index > this.length) {
 			this.index = 1;
@@ -81,7 +82,9 @@ export default class Slide {
 	};
 	flickrFetch = async () => {
 		await fetch(
-			`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=1dac4d56a9a393f76094d14472f13a89&tags=${this.flickrTag}&extras=url_h&format=json&nojsoncallback=1`,
+			`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=1dac4d56a9a393f76094d14472f13a89&tags=${
+				this.flickrTag ? this.flickrTag : this._tag
+			}&extras=url_h&format=json&nojsoncallback=1`,
 		)
 			.then((res) => res.json())
 			.then((data) => {
