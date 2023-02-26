@@ -15,4 +15,6 @@ export const view = {
 	langs: document.querySelectorAll('.api-lang__item input') as NodeListOf<HTMLInputElement>,
 	checkboies: document.querySelectorAll('.api-node input') as NodeListOf<HTMLInputElement>,
 	toggle: document.querySelector('.optionsToggle') as HTMLDivElement,
+	background: document.querySelectorAll('.api-background__item input') as NodeListOf<HTMLInputElement>,
+	tags: document.querySelectorAll('.tag > button') as NodeListOf<HTMLButtonElement>,
 };

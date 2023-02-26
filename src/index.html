@@ -64,7 +64,7 @@
       <span class="date"></span>
       <div class="greeting-container">
         <span class="greeting"></span>
-        <input type="text" placeholder='[Enter name]' class="name" />
+        <input id="placeholder" type="text" placeholder='[Enter name]' class="name" />
       </div>
     </div>
   </main>
@@ -101,6 +101,24 @@
       <h3 id="qoute" class="api-title ">Цитата</h3>
       <input type="checkbox" checked name="qouteApi">
     </div>
+    <div class="api-background">
+      <h3 id="background" class="api-title ">фоновое изображение</h3>
+      <div class="api-background__option">
+        <div class="api-background__item"><label for="github"><span>Github</span> </label><input type="radio"
+            id="github" name="background" value="github" checked></div>
+        <div class="api-background__item"><label for="flickr"><span>Flickr</span> </label><input type="radio"
+            id="flickr" name="background" value="flickr">
+        </div>
+      </div>
+    </div>
+
+    <div class="tag">
+      <button>Nature</button>
+      <button>See</button>
+      <button>Mountains</button>
+      <button>River</button>
+      <button>Animal</button>
+    </div>
   </div>
   <div class="optionsToggle">
     <button>
@@ -117,6 +135,7 @@
       </svg>
     </button>
   </div>
+  <div class="bg"></div>
 </body>
 
 </html>

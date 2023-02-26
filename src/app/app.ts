@@ -27,7 +27,9 @@ const app = () => {
 		  };
 
 	const Lang = localStorage.getItem('lang') ? (localStorage.getItem('lang') as ILang) : 'ru';
-
+	const backgroundApi = localStorage.getItem('backgroundApi')
+		? (JSON.parse(localStorage.getItem('backgroundApi')!) as { api: string; tag: string })
+		: { api: 'github', tag: 'nature' };
 	view.checkboies.forEach((checkboies) => {
 		checkboies.checked = api_Otions[checkboies.name as keyof IApi_Otions];
 		const api = document.getElementById(checkboies.name) as HTMLDivElement;
@@ -37,6 +39,20 @@ const app = () => {
 			api!.style.display = 'none';
 		}
 	});
+	view.background.forEach((el) => {
+		if (el.value === backgroundApi.api) {
+			el.checked = true;
+		} else {
+			el.checked = false;
+		}
+	});
+	console.log(view.tags);
+	if (backgroundApi.api === 'github') {
+		view.tags.forEach((el) => {
+			console.log(el);
+			el.disabled = true;
+		});
+	}
 
 	const { dayContainer, greetingContainer, timeContainer } = view;
 	const time = new Time(timeContainer, dayContainer, greetingContainer);
@@ -45,11 +61,9 @@ const app = () => {
 		setTimeout(showTime, 1000);
 	};
 	showTime();
-	const slide = new Slide(Time.serialize(time.getDayPart(new Date().getHours())));
+	const slide = new Slide(Time.serialize(time.getDayPart(new Date().getHours())), backgroundApi.api, backgroundApi.tag);
 	time.observer = slide.setTag;
-	slide.setBg();
-	slide.ms = 6000 * 30;
-	slide.animateSLide();
+	slide.init();
 
 	const wether = new Weather('.weather');
 
@@ -168,6 +182,10 @@ const app = () => {
 	};
 
 	const setLanguage = (val: string) => {
+		(document.getElementById('placeholder') as HTMLInputElement).setAttribute(
+			'placeholder',
+			val === 'ru' ? '[Bведите имя]' : '[Enter name]',
+		);
 		setLang(val);
 		optionsTitle(isRu(val));
 		qouteAPi.lang = val;
@@ -185,6 +203,7 @@ const app = () => {
 		lang.addEventListener('change', (e) => {
 			const val = (e.target as HTMLInputElement).value;
 			setLanguage(val);
+
 			localStorage.setItem('lang', val);
 		});
 	});
@@ -212,6 +231,31 @@ const app = () => {
 			return;
 		}
 		view.apiOPtions.classList.remove('active');
+	});
+	view.background.forEach((el) => {
+		el.addEventListener('change', (e) => {
+			const target = e.target as HTMLInputElement;
+			slide.api = target.value;
+			backgroundApi.api = target.value;
+			if (target.value === 'github') {
+				view.tags.forEach((el) => {
+					el.disabled = true;
+				});
+			} else {
+				view.tags.forEach((el) => {
+					el.disabled = false;
+				});
+			}
+			localStorage.setItem('backgroundApi', JSON.stringify(backgroundApi));
+		});
+	});
+	view.tags.forEach((el) => {
+		el.addEventListener('click', () => {
+			const val = el.textContent!.toLowerCase();
+			slide.setNewflickrTag(val);
+			backgroundApi.tag = val.toLowerCase();
+			localStorage.setItem('backgroundApi', JSON.stringify(backgroundApi));
+		});
 	});
 };
 
