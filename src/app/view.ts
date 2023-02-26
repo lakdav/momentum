@@ -2,7 +2,6 @@ export const view = {
 	timeContainer: document.querySelector('.time') as HTMLDivElement,
 	dayContainer: document.querySelector('.date') as HTMLDivElement,
 	greetingContainer: document.querySelector('.greeting-container') as HTMLDivElement,
-
 	play: document.querySelector('.play') as HTMLButtonElement,
 	prev: document.querySelector('.play-prev') as HTMLButtonElement,
 	next: document.querySelector('.play-next') as HTMLButtonElement,
@@ -12,4 +11,8 @@ export const view = {
 	volume: document.querySelector('.voice > .voice__volume') as HTMLInputElement,
 	duration: document.querySelector('.controls__progress-duration') as HTMLParagraphElement,
 	progress: document.querySelector('.controls__progress > progress') as HTMLProgressElement,
+	apiOPtions: document.querySelector('.api-option') as HTMLDivElement,
+	langs: document.querySelectorAll('.api-lang__item input') as NodeListOf<HTMLInputElement>,
+	checkboies: document.querySelectorAll('.api-node input') as NodeListOf<HTMLInputElement>,
+	toggle: document.querySelector('.optionsToggle') as HTMLDivElement,
 };

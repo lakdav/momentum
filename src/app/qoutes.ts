@@ -1,5 +1,3 @@
-import { IQuotes } from './Quotes';
-
 export const qoutes = [
 	{
 		text: 'Genius is one percent inspiration and ninety-nine percent perspiration.',

@@ -65,6 +65,13 @@ class Weather {
 		const defaultCity = this.#lang === 'ru' ? 'Минск' : 'Minsk';
 		this.city = localStorage.getItem('city') ? (localStorage.getItem('city') as string) : defaultCity;
 	}
+	get lang() {
+		return this.#lang;
+	}
+	set lang(val) {
+		this.#lang = val;
+		this.getWether();
+	}
 	async getWether() {
 		try {
 			const response = await fetch(
@@ -104,9 +111,9 @@ class Weather {
 		weatherIcon.classList.add(`owf-${this.data?.weather[0].id}`);
 		temperature.textContent = `${this.data?.main.temp} °C`;
 		weatherDescription.textContent = this.data?.weather[0].description as string;
-		speed.textContent = `${
-			this.#lang === 'ru' ? 'Cкорость ветра' : 'Wind speed'
-		}: ${this.data?.wind.speed.toFixed()} m/s`;
+		speed.textContent = `${this.#lang === 'ru' ? 'Cкорость ветра' : 'Wind speed'}: ${this.data?.wind.speed.toFixed()} ${
+			this.#lang === 'ru' ? 'м/c' : 'm/s'
+		}`;
 		humidity.textContent = `${this.#lang === 'ru' ? 'Bлажность' : 'humidity'}: ${this.data?.main.humidity}%`;
 	}
 	views() {

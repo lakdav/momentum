@@ -15,7 +15,9 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"core-js": "^3.26.1"
+		"core-js": "^3.26.1",
+		"i18next": "^22.4.10",
+		"translate": "^1.4.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.2",
